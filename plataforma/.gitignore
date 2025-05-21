@@ -1,0 +1,9 @@
+site/
+env/
+.env
+venv
+.cache/
+.vscode/
+target/
+volume/
+__pycache__/
