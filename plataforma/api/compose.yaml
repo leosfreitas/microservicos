@@ -42,7 +42,14 @@ services:
     ports:
       - 8080:8080
 
-  # exchange:
-  #   build:
-  #     context: ./exchange-service
-  #     dockerfile: Dockerfile
+  exchange:
+    hostname: exchange
+    build:
+      context: ./exchange-service
+      dockerfile: Dockerfile
+    env_file:
+      - ./exchange-service/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth
