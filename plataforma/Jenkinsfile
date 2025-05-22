@@ -2,43 +2,65 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_REGISTRY = 'seunome'  // Substitua por seu username do Docker Hub
+        DOCKER_REGISTRY = 'leosfreitas'
     }
     
     stages {
         stage('Checkout') {
             steps {
-                echo 'Código já foi baixado pelo Jenkins'
+                echo 'Código baixado com sucesso!'
+                bat 'dir'
+                bat 'dir plataforma'
+                bat 'dir plataforma\\api'
+            }
+        }
+        
+        stage('Verificar Estrutura') {
+            steps {
+                echo 'Verificando estrutura do projeto...'
+                bat 'dir plataforma\\api /s /b | findstr pom.xml'
+                bat 'dir plataforma\\api /s /b | findstr Dockerfile'
+            }
+        }
+        
+        stage('Verificar Java e Maven') {
+            steps {
+                bat 'java -version'
+                bat 'mvn -version'
             }
         }
         
         stage('Build Services') {
             parallel {
-                stage('Auth Service') {
+                stage('Account Service') {
                     steps {
-                        dir('api/auth-service') {
-                            sh 'mvn clean package -DskipTests'
+                        dir('plataforma/api/account-service') {
+                            bat 'dir'
+                            bat 'mvn clean package -DskipTests'
                         }
                     }
                 }
-                stage('Account Service') {
+                stage('Auth Service') {
                     steps {
-                        dir('api/account-service') {
-                            sh 'mvn clean package -DskipTests'
+                        dir('plataforma/api/auth-service') {
+                            bat 'dir'
+                            bat 'mvn clean package -DskipTests'
                         }
                     }
                 }
                 stage('Product Service') {
                     steps {
-                        dir('api/product-service') {
-                            sh 'mvn clean package -DskipTests'
+                        dir('plataforma/api/product-service') {
+                            bat 'dir'
+                            bat 'mvn clean package -DskipTests'
                         }
                     }
                 }
                 stage('Gateway Service') {
                     steps {
-                        dir('api/gateway-service') {
-                            sh 'mvn clean package -DskipTests'
+                        dir('plataforma/api/gateway-service') {
+                            bat 'dir'
+                            bat 'mvn clean package -DskipTests'
                         }
                     }
                 }
@@ -47,78 +69,9 @@ pipeline {
         
         stage('Build Order Service') {
             steps {
-                dir('api/order-service') {
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
-        
-        stage('Docker Build & Push') {
-            parallel {
-                stage('Auth Service Docker') {
-                    steps {
-                        dir('api/auth-service') {
-                            script {
-                                def image = docker.build("${DOCKER_REGISTRY}/auth-service:${BUILD_NUMBER}")
-                                docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub-credentials') {
-                                    image.push()
-                                    image.push("latest")
-                                }
-                            }
-                        }
-                    }
-                }
-                stage('Account Service Docker') {
-                    steps {
-                        dir('api/account-service') {
-                            script {
-                                def image = docker.build("${DOCKER_REGISTRY}/account-service:${BUILD_NUMBER}")
-                                docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub-credentials') {
-                                    image.push()
-                                    image.push("latest")
-                                }
-                            }
-                        }
-                    }
-                }
-                stage('Product Service Docker') {
-                    steps {
-                        dir('api/product-service') {
-                            script {
-                                def image = docker.build("${DOCKER_REGISTRY}/product-service:${BUILD_NUMBER}")
-                                docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub-credentials') {
-                                    image.push()
-                                    image.push("latest")
-                                }
-                            }
-                        }
-                    }
-                }
-                stage('Gateway Service Docker') {
-                    steps {
-                        dir('api/gateway-service') {
-                            script {
-                                def image = docker.build("${DOCKER_REGISTRY}/gateway-service:${BUILD_NUMBER}")
-                                docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub-credentials') {
-                                    image.push()
-                                    image.push("latest")
-                                }
-                            }
-                        }
-                    }
-                }
-                stage('Order Service Docker') {
-                    steps {
-                        dir('api/order-service') {
-                            script {
-                                def image = docker.build("${DOCKER_REGISTRY}/order-service:${BUILD_NUMBER}")
-                                docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub-credentials') {
-                                    image.push()
-                                    image.push("latest")
-                                }
-                            }
-                        }
-                    }
+                dir('plataforma/api/order-service') {
+                    bat 'dir'
+                    bat 'mvn clean package -DskipTests'
                 }
             }
         }
@@ -129,7 +82,10 @@ pipeline {
             echo 'Pipeline executado com sucesso!'
         }
         failure {
-            echo 'Pipeline falhou!'
+            echo 'Pipeline falhou, verificando logs...'
+        }
+        always {
+            echo 'Processo finalizado'
         }
     }
 }
