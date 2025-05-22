@@ -1,41 +1,13 @@
 pipeline {
     agent any
     
-    environment {
-        DOCKER_REGISTRY = 'leosfreitas'
-    }
-    
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Código baixado com sucesso!'
-                bat 'dir'
-                bat 'dir plataforma'
-                bat 'dir plataforma\\api'
-            }
-        }
-        
-        stage('Verificar Estrutura') {
-            steps {
-                echo 'Verificando estrutura do projeto...'
-                bat 'dir plataforma\\api /s /b | findstr pom.xml'
-                bat 'dir plataforma\\api /s /b | findstr Dockerfile'
-            }
-        }
-        
-        stage('Verificar Java e Maven') {
-            steps {
-                bat 'java -version'
-                bat 'mvn -version'
-            }
-        }
-        
         stage('Build Services') {
             parallel {
                 stage('Account Service') {
                     steps {
                         dir('plataforma/api/account-service') {
-                            bat 'dir'
+                            echo 'Building account-service...'
                             bat 'mvn clean package -DskipTests'
                         }
                     }
@@ -43,7 +15,7 @@ pipeline {
                 stage('Auth Service') {
                     steps {
                         dir('plataforma/api/auth-service') {
-                            bat 'dir'
+                            echo 'Building auth-service...'
                             bat 'mvn clean package -DskipTests'
                         }
                     }
@@ -51,7 +23,7 @@ pipeline {
                 stage('Product Service') {
                     steps {
                         dir('plataforma/api/product-service') {
-                            bat 'dir'
+                            echo 'Building product-service...'
                             bat 'mvn clean package -DskipTests'
                         }
                     }
@@ -59,19 +31,18 @@ pipeline {
                 stage('Gateway Service') {
                     steps {
                         dir('plataforma/api/gateway-service') {
-                            bat 'dir'
+                            echo 'Building gateway-service...'
                             bat 'mvn clean package -DskipTests'
                         }
                     }
                 }
-            }
-        }
-        
-        stage('Build Order Service') {
-            steps {
-                dir('plataforma/api/order-service') {
-                    bat 'dir'
-                    bat 'mvn clean package -DskipTests'
+                stage('Order Service') {
+                    steps {
+                        dir('plataforma/api/order-service') {
+                            echo 'Building order-service...'
+                            bat 'mvn clean package -DskipTests'
+                        }
+                    }
                 }
             }
         }
@@ -79,13 +50,10 @@ pipeline {
     
     post {
         success {
-            echo 'Pipeline executado com sucesso!'
+            echo 'Build concluído com sucesso!'
         }
         failure {
-            echo 'Pipeline falhou, verificando logs...'
-        }
-        always {
-            echo 'Processo finalizado'
+            echo 'Build falhou. Verifique os logs.'
         }
     }
 }
