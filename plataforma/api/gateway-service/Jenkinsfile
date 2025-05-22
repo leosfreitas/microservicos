@@ -5,11 +5,6 @@ pipeline {
         NAME = "leosfreitas/${env.SERVICE}"
     }
     stages {
-        stage('Dependencies') {
-            steps {
-                echo 'Installing dependencies...'
-            }
-        }
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package'
