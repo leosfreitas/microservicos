@@ -1,10 +1,15 @@
 pipeline {
     agent any
     environment {
-        SERVICE = 'gateway'
-        NAME = "humbertosandmann/${env.SERVICE}"
+        SERVICE = 'gateway-service'
+        NAME = "leosfreitas/${env.SERVICE}"
     }
     stages {
+        stage('Dependencies') {
+            steps {
+                echo 'Installing dependencies...'
+            }
+        }
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package'
