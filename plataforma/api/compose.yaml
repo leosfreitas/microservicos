@@ -36,6 +36,20 @@ services:
     depends_on:
       - db
 
+  order:
+    hostname: order
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: ${POSTGRES_USER:-store}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-store}
+    depends_on:
+      - db
+      - product
+      - account
+
   auth:
     hostname: auth
     build:
