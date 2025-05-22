@@ -8,7 +8,7 @@ pipeline {
                     steps {
                         dir('plataforma/api/account-service') {
                             echo 'Building account-service...'
-                            bat 'mvn clean package -DskipTests'
+                            bat 'mvn clean install'
                         }
                     }
                 }
@@ -16,7 +16,7 @@ pipeline {
                     steps {
                         dir('plataforma/api/auth-service') {
                             echo 'Building auth-service...'
-                            bat 'mvn clean package -DskipTests'
+                            bat 'mvn clean install'
                         }
                     }
                 }
@@ -24,7 +24,7 @@ pipeline {
                     steps {
                         dir('plataforma/api/product-service') {
                             echo 'Building product-service...'
-                            bat 'mvn clean package -DskipTests'
+                            bat 'mvn clean install'
                         }
                     }
                 }
@@ -32,7 +32,7 @@ pipeline {
                     steps {
                         dir('plataforma/api/gateway-service') {
                             echo 'Building gateway-service...'
-                            bat 'mvn clean package -DskipTests'
+                            bat 'mvn clean install'
                         }
                     }
                 }
@@ -40,7 +40,7 @@ pipeline {
                     steps {
                         dir('plataforma/api/order-service') {
                             echo 'Building order-service...'
-                            bat 'mvn clean package -DskipTests'
+                            bat 'mvn clean install'
                         }
                     }
                 }
