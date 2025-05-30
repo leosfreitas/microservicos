@@ -11,8 +11,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-store}
     volumes:
       - $VOLUME/postgres/store:/var/lib/postgresql/data
-    # ports:
-    #   - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-store} -d ${POSTGRES_DB:-store}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   account:
     hostname: account
@@ -23,6 +27,10 @@ services:
       DATABASE_HOST: db
       DATABASE_USER: ${POSTGRES_USER:-store}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-store}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
 
   product:
     hostname: product
@@ -34,7 +42,9 @@ services:
       DATABASE_USER: ${POSTGRES_USER:-store}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-store}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    restart: on-failure
 
   order:
     hostname: order
@@ -46,9 +56,13 @@ services:
       DATABASE_USER: ${POSTGRES_USER:-store}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-store}
     depends_on:
-      - db
-      - product
-      - account
+      db:
+        condition: service_healthy
+      product:
+        condition: service_started
+      account:
+        condition: service_started
+    restart: on-failure
 
   auth:
     hostname: auth
@@ -56,7 +70,11 @@ services:
       context: ./auth-service
       dockerfile: Dockerfile
     environment:
-      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-yrBBgYlvJQeslzFlgX9MFZccToI2fjRFqualquercoisa}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-9FmjT8O3KACNhEDOhhRnfVNQ28xyBc66NR3KBLvllTM=}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
 
   gateway:
     hostname: gateway
@@ -67,6 +85,12 @@ services:
       - LOGGING_LEVEL_STORE=${LOGGING_LEVEL_STORE:-debug}
     ports:
       - 8080:8080
+    depends_on:
+      - account
+      - product
+      - order
+      - auth
+    restart: on-failure
 
   exchange:
     hostname: exchange
@@ -78,4 +102,6 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - auth
+      auth:
+        condition: service_started
+    restart: on-failure
