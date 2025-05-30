@@ -1,130 +1,58 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: account-service-secret
-  namespace: default
-type: Opaque
-data:
-  postgres-db: c3RvcmU=
-  postgres-user: c3RvcmU=
-  postgres-password: NWVDcjN0
-  jwt-secret-key: ZVhKQ1FtZFpiSFpLVVdWemJIcEdiR2RZT1UxR1dtTmpWRzlKTW1acVVrWnhkV0ZzY1hWbGNtTnZhWE5o
-  exchange-api-key: ZjhhOGU4ZWIxYjk5MDlkODFlOTg4ZWM3
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: account-service-config
-  namespace: default
-data:
-  spring.profiles.active: "production"
-  server.port: "8080"
-  logging.level.store: "debug"
-  exchange.api.base.url: "https://v6.exchangerate-api.com/v6"
-  jwt.algorithm: "HS256"
-  volume: "./volume"
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: account-service
-  namespace: default
-  labels:
-    app: account-service
+  name: account
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: account-service
+      app: account
   template:
     metadata:
       labels:
-        app: account-service
+        app: account
     spec:
       containers:
-      - name: account-service
-        image: leosfreitas/account:latest
-        ports:
-        - containerPort: 8080
-        env:
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: account-service-secret
-              key: postgres-db
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: account-service-secret
-              key: postgres-user
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: account-service-secret
-              key: postgres-password
-        - name: JWT_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: account-service-secret
-              key: jwt-secret-key
-        - name: EXCHANGE_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: account-service-secret
-              key: exchange-api-key
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
-            configMapKeyRef:
-              name: account-service-config
-              key: spring.profiles.active
-        - name: SERVER_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: account-service-config
-              key: server.port
-        - name: LOGGING_LEVEL_STORE
-          valueFrom:
-            configMapKeyRef:
-              name: account-service-config
-              key: logging.level.store
-        - name: EXCHANGE_API_BASE_URL
-          valueFrom:
-            configMapKeyRef:
-              name: account-service-config
-              key: exchange.api.base.url
-        - name: JWT_ALGORITHM
-          valueFrom:
-            configMapKeyRef:
-              name: account-service-config
-              key: jwt.algorithm
-        - name: VOLUME
-          valueFrom:
-            configMapKeyRef:
-              name: account-service-config
-              key: volume
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-
+        - name: account
+          image: leosfreitas/account:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_HOST
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"
+            limits:
+              memory: "300Mi"
+              cpu: "200m"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
-  namespace: default
+  name: account
   labels:
-    app: account-service
+    app: account
 spec:
-  selector:
-    app: account-service
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
   type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: account
