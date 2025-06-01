@@ -41,6 +41,8 @@ services:
       DATABASE_HOST: db
       DATABASE_USER: ${POSTGRES_USER:-store}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-store}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     depends_on:
       db:
         condition: service_healthy
@@ -55,6 +57,8 @@ services:
       DATABASE_HOST: db
       DATABASE_USER: ${POSTGRES_USER:-store}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-store}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     depends_on:
       db:
         condition: service_healthy
@@ -105,3 +109,35 @@ services:
       auth:
         condition: service_started
     restart: on-failure
+
+  redis:
+    image: redis:7
+    hostname: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - $VOLUME/redis:/data
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    hostname: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./volume/prometheus:/etc/prometheus
+    restart: always
+
+  grafana:
+    image: grafana/grafana-enterprise
+    hostname: grafana
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - $VOLUME/grafana:/var/lib/grafana
+      - $VOLUME/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources      
+    restart: always
+    depends_on:
+      - prometheus

@@ -1,18 +1,18 @@
-// OrderItemOut.java
+
 package store.order;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import lombok.Builder;
 import lombok.experimental.Accessors;
-import store.product.ProductOut;
 
 @Builder 
 @Accessors(fluent = true)
-public record OrderItemOut(
+public record OrderSummaryOut(
     String id,
-    ProductOut product,
-    Integer quantity,
+    LocalDateTime date,
     Double total
 ) implements Serializable {
+    
 }

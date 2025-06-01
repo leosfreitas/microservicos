@@ -1,6 +1,7 @@
 // ProductOut.java
 package store.product;
 
+import java.io.Serializable;
 import lombok.Builder;
 import lombok.experimental.Accessors;
 
@@ -10,5 +11,5 @@ public record ProductOut(
     String name,
     Double price,
     String unit
-) {
+) implements Serializable {
 }
