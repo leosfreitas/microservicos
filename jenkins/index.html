@@ -16,7 +16,7 @@
         <link rel="prev" href="../bottlenecks/">
       
       
-        <link rel="next" href="../video-individual/">
+        <link rel="next" href="../minikube/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -444,39 +444,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#teste-de-ambiente-via-info-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      Teste de Ambiente via /info – Gateway
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Teste de Ambiente via /info – Gateway">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#endpoint" class="md-nav__link">
-    <span class="md-ellipsis">
-      Endpoint
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exemplo-de-resposta-200-ok" class="md-nav__link">
-    <span class="md-ellipsis">
-      Exemplo de resposta 200 OK
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#deploy" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy
@@ -501,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../minicubes.md" class="md-nav__link">
+      <a href="../minikube/" class="md-nav__link">
         
   
   
@@ -570,7 +537,7 @@
   
   
   <span class="md-ellipsis">
-    Projetos
+    Projeto
     
   </span>
   
@@ -581,7 +548,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Projetos
+            Projeto
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -684,7 +651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../custos.md" class="md-nav__link">
+      <a href="../custos/" class="md-nav__link">
         
   
   
@@ -822,39 +789,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#teste-de-ambiente-via-info-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      Teste de Ambiente via /info – Gateway
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Teste de Ambiente via /info – Gateway">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#endpoint" class="md-nav__link">
-    <span class="md-ellipsis">
-      Endpoint
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exemplo-de-resposta-200-ok" class="md-nav__link">
-    <span class="md-ellipsis">
-      Exemplo de resposta 200 OK
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#deploy" class="md-nav__link">
     <span class="md-ellipsis">
       Deploy
@@ -921,10 +855,6 @@ Também detalha o endpoint <code>/info</code> do <strong>Gateway</strong>, usado
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Console Jenkins</p>
-<p><img alt="jenkins-job" src="./imgs/jenkins.png" /></p>
-</div>
 <hr />
 <h2 id="credenciais-ambiente">Credenciais &amp; Ambiente</h2>
 <table>
@@ -959,29 +889,8 @@ Também detalha o endpoint <code>/info</code> do <strong>Gateway</strong>, usado
 <li><code>order-service</code></li>
 </ul>
 <hr />
-<h2 id="teste-de-ambiente-via-info-gateway">Teste de Ambiente via <code>/info</code> – Gateway</h2>
-<h3 id="endpoint">Endpoint</h3>
-<div class="highlight"><pre><span></span><code><span class="err">GET /info</span>
-</code></pre></div>
-<h3 id="exemplo-de-resposta-200-ok">Exemplo de resposta <code>200 OK</code></h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;hostname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;minikube&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;os.arch&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;amd64&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;os.name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linux&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;os.version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5.15.0&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;java.version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;17.0.8&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Utilização</p>
-<ul>
-<li>Validar o ambiente de execução do gateway  </li>
-<li>Verificar arquitetura, versão do Java e path do <code>.jar</code>  </li>
-<li>Diagnóstico de problemas em builds de produção</li>
-</ul>
-</div>
 <div class="admonition info">
-<p class="admonition-title">Rota Funcionando</p>
+<p class="admonition-title">Pipeline Pronta</p>
 <p><img alt="info-endpoint" src="../imgs/jenkins2.png" /></p>
 </div>
 <hr />
