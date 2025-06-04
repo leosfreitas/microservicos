@@ -1,157 +1,36 @@
-site_name: Platforms, Microservices, DevOps and APIs
-site_author: Sandmann, H.
-site_url: https://insper.github.io/platform
-repo_url: https://github.com/insper/platform
-repo_name: insper/platform
 
+# --- dados básicos do site ---
+site_name: Plataforma – APIs
+site_description: Documentação mínima para teste
+site_author: Seu Nome
+
+# --- tema ---
 theme:
   name: material
-  palette:
-    - scheme: default
-      primary: grey
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme)"
-      primary: grey
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default 
-      primary: grey
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      primary: grey
-      scheme: slate
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to system preference
-  features:
-    - content.code.copy
-    - content.code.select
-    - content.code.annotate
-    - content.tooltips
-    - navigation.instant
-    - navigation.instant.progress
-    - navigation.top
-    - navigation.path
-    - navigation.tracking
-  icon:
-    admonition:
-      note: fontawesome/solid/note-sticky
-      abstract: fontawesome/solid/book
-      info: fontawesome/solid/circle-info
-      tip: fontawesome/solid/bullhorn
-      success: fontawesome/solid/check
-      question: fontawesome/solid/circle-question
-      warning: fontawesome/solid/triangle-exclamation
-      failure: fontawesome/solid/bomb
-      danger: fontawesome/solid/skull
-      bug: fontawesome/solid/robot
-      example: fontawesome/solid/flask
-      quote: fontawesome/solid/quote-left
-  logo: assets/images/insper.svg
+  language: pt
 
+# --- extensões de markdown ---
 markdown_extensions:
   - admonition
-  - attr_list
-  - md_in_html
-  - markdown_grid_tables:
-  - pymdownx.arithmatex:
-      generic: true
   - pymdownx.details
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji 
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  - pymdownx.inlinehilite
-  - pymdownx.snippets:
-      url_download: true
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.tasklist:
-      custom_checkbox: true  
-  - footnotes
-  - pymdownx.critic
-  - pymdownx.caret
-  - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.tilde
-  - tables
+  - pymdownx.superfences
+  - pymdownx.emoji
 
-plugins:
-  - git-revision-date-localized:
-      enable_creation_date: true
-  - git-authors
-  - git-committers:
-      repository: hsandmann/hsandmann.github.com
-      branch: main
-  - search
-  - minify:
-      minify_html: true
-  - badges
-  - markdown-exec
-  - render_swagger:
-      allow_arbitrary_locations : true
-  - termynal:
-      prompt_literal_start:
-        - "$"
-        - ">"
-
-extra_javascript:
-  - assets/javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-
-extra_css:
-  - assets/stylesheets/extra.css
-
+# --- navegação ---
 nav:
-  - Home: index.md
-  - 2025.1: versions/2025.1.md
-  - Checkpoints:
-    - 1. CRUD: checkpoints/checkpoint1.md
-    - 2. Gateway: checkpoints/checkpoint2.md
-    - 3. Security: checkpoints/checkpoint3.md
-    - 4. DevOps: checkpoints/checkpoint4.md
-    - 5. Orchestration: checkpoints/checkpoint5.md
-  - Exercises:
-    - 1. Exchange API: exercises/exercise1.md
-    - 2. Order and Product APIs: exercises/exercise2.md
-  - Concepts:
-    - Microservices: concepts/microservices.md
-    - Architectures: concepts/architectures.md
-  - Versions:
-    - 2025.1: versions/2025.1.md
-    - 2024.1: versions/2024.1.md
+  - Início: index.md
   - Individual:
-      - Exchange API: individual/exchange_api.md
-      - Product API: individual/product_api.md
-      - Order API: individual/order_api.md
-      - Jenkins: individual/jenkins.md
-      - Bottlenecks: individual/bottlenecks.md
-  - Project:
-      - Configuração AWS: project/configuracao_aws.md
-      - Disponibilização da Aplicação: project/disponibilizacao_aplicacao.md
-      - Testes de Carga: project/testes_carga.md
-      - CI/CD: project/ci_cd.md
-      - Custos: project/custos.md
-      - PaaS: project/paas.md
-  - Appendix:
-    - REST vs GraphQL: appendix/rest-vs-graphql.md
-    - Versioning REST APIs: appendix/versioning-rest-apis.md
-    - RSA Algorithm: appendix/rsa.md
-    - Oh My Zsh: appendix/ohmyzsh.md
-    - Others: appendix/others.md
-  - Disclaimer: disclaimer.md
+      - Exchange API: exchange.md
+      - Product API: product.md
+      - Order API: order.md
+      - Bottleneck: bottlenecks.md
+      - Jenkins: jenkins.md
+      - Minikubes: minicubes.md
+  - Projetos:
+      - Configuração do AWS: configAWS.md
+      - Configuração do EKS: configEKS.md
+      - Testes de Carga: testedecarga.md
+      - CI/CD: cicd.md
+      - Custos: custos.md
+      - PaaS: paas.md
+      - Vídeo: video.md

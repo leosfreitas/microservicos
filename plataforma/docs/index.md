@@ -80,18 +80,26 @@ Criar uma **plataforma RESTful** com autenticação e integração entre micross
 ##  Apresentação
 
 !!! success "Links Importantes"
-    - [Vídeo de apresentação (2-3 minutos)](https://www.youtube.com/seu_video)
-    - [Slides do projeto](https://docs.google.com/presentation/d/seu_slide_id)
+    - [Vídeo de apresentação do Projeto (2-3 minutos)](https://www.youtube.com/watch?v=Zj4Q0OFiJvA&feature=youtu.be)
+    - [Vídeo de apresentação Individual (2-3 minutos)](https://www.youtube.com/watch?v=jRFk8OAOees&feature=youtu.be)
+
 
 ---
 
 ##  Repositórios
 
 !!! note "GitHub"
-    - [Repositório principal](https://github.com/seu_usuario/seu_repo)
+    - [Repositório principal](https://github.com/leosfreitas/microservicos)
     - Serviços:
-        - [product-service](https://github.com/seu_usuario/product-service)
-        - [exchange-service](https://github.com/seu_usuario/exchange-service)
+        - [microservicos-account](https://github.com/leosfreitas/microservicos-account)
+        - [microservicos-account-service](https://github.com/leosfreitas/microservicos-account-service)
+        - [microservicos-auth](https://github.com/leosfreitas/microservicos-auth)
+        - [microservicos-auth-service](https://github.com/leosfreitas/microservicos-auth-service)
+        - [microservicos-gateway-service](https://github.com/leosfreitas/microservicos-gateway-service)
+        - [microservicos-order](https://github.com/leosfreitas/microservicos-order)
+        - [microservicos-order-service](https://github.com/leosfreitas/microservicos-order-service)
+        - [microservicos-product](https://github.com/leosfreitas/microservicos-product)
+        - [microservicos-product-service](https://github.com/leosfreitas/microservicos-product-service)
 
 ---
 
